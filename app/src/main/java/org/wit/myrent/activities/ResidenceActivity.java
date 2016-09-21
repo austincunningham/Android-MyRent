@@ -3,6 +3,7 @@ package org.wit.myrent.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
@@ -15,11 +16,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import org.wit.myrent.R;
 import org.wit.myrent.models.Residence;
 
-public class ResidenceActivity extends AppCompatActivity implements TextWatcher, CompoundButton.OnCheckedChangeListener {
+public class ResidenceActivity extends AppCompatActivity implements TextWatcher, OnCheckedChangeListener {
 
     private EditText geolocation;
     private Residence residence;
-    private CheckBox rented;
+    public CheckBox rented;
     private Button dateButton;
 
     @Override
@@ -66,7 +67,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton arg0, boolean isChecked) {
+    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         Log.i(this.getClass().getSimpleName(), "rented Checked");
         residence.rented = isChecked;
     }
