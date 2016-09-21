@@ -1,4 +1,4 @@
-package org.wit.myrent;
+package org.wit.myrent.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.text.Editable;
+
+import org.wit.myrent.R;
+import org.wit.myrent.models.Residence;
 
 public class MyRentActivity extends AppCompatActivity implements TextWatcher {
 
