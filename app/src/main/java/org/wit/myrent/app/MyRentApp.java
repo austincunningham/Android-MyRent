@@ -1,7 +1,16 @@
 package org.wit.myrent.app;
 
-/**
- * Created by ictskills on 23/09/16.
- */
-public class MyRentApp {
+import org.wit.myrent.models.Portfolio;
+import android.app.Application;
+
+public class MyRentApp extends Application
+{
+    public Portfolio portfolio;
+
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+        portfolio = new Portfolio();
+    }
 }
