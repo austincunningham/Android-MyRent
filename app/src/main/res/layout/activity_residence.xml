@@ -15,7 +15,9 @@
         android:id="@+id/geolocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/geolocation_hint" />
+        android:hint="@string/geolocation_hint"
+        android:singleLine="true"
+        />
 
     <TextView
         android:layout_width="match_parent"

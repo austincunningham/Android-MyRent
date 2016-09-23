@@ -34,6 +34,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
 
         residence = new Residence();
         dateButton.setEnabled(false);
+
         rented.setOnCheckedChangeListener(this);
         geolocation.addTextChangedListener(this);
 
@@ -65,6 +66,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
 
     @Override
     public void afterTextChanged(Editable editable) {
+        Log.i(this.getClass().getSimpleName(), "character Input");
         residence.setGeolocation(editable.toString());
     }
 
