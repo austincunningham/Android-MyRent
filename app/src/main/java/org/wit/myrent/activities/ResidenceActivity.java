@@ -20,7 +20,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
 
     private EditText geolocation;
     private Residence residence;
-    public CheckBox rented;
+    private CheckBox rented;
     private Button dateButton;
 
     @Override
@@ -35,6 +35,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         residence = new Residence();
         dateButton.setEnabled(false);
         geolocation.addTextChangedListener(this);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
