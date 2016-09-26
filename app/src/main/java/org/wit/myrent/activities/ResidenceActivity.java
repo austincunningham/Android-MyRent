@@ -65,7 +65,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
     public void updateControls(Residence residence)
     {
         geolocation.setText(residence.geolocation);
-        rented.setChecked(residence.rented);
+        rented.setOnCheckedChangeListener(this);
         dateButton.setText(residence.getDateString());
     }
 
@@ -124,5 +124,12 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         Date date = new GregorianCalendar(year, monthOfYear, dayOfMonth).getTime();
         residence.date = date.getTime();
         dateButton.setText(residence.getDateString());
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        portfolio.saveResidences();
     }
 }
