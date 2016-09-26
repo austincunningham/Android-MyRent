@@ -43,7 +43,7 @@ public class Residence
         json.put(JSON_RENTED        , rented);
         return json;
     }
-    
+
     public void setGeolocation(String geolocation)
     {
         this.geolocation = geolocation;
