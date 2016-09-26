@@ -8,6 +8,8 @@ import org.wit.myrent.models.Residence;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.content.Context;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 
-public class ResidenceListActivity extends Activity implements AdapterView.OnItemClickListener
+public class ResidenceListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener
 {
     private ListView listView;
     private Portfolio portfolio;
@@ -58,6 +60,14 @@ public class ResidenceListActivity extends Activity implements AdapterView.OnIte
     {
         super.onResume();
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.residencelist, menu);
+        return true;
     }
 }
 
