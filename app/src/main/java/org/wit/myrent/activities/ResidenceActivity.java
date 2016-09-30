@@ -26,6 +26,7 @@ import java.util.GregorianCalendar;
 import android.app.DatePickerDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
+
 import static org.wit.android.helpers.IntentHelper.navigateUp;
 
 public class ResidenceActivity extends AppCompatActivity implements TextWatcher, OnCheckedChangeListener, View.OnClickListener, DatePickerDialog.OnDateSetListener
@@ -53,7 +54,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         rented.setOnCheckedChangeListener(this);
         geolocation.addTextChangedListener(this);
 
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         MyRentApp app = (MyRentApp) getApplication();
         portfolio = app.portfolio;
