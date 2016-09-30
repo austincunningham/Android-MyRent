@@ -26,6 +26,7 @@ import java.util.GregorianCalendar;
 import android.app.DatePickerDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
+import static org.wit.android.helpers.IntentHelper.navigateUp;
 
 public class ResidenceActivity extends AppCompatActivity implements TextWatcher, OnCheckedChangeListener, View.OnClickListener, DatePickerDialog.OnDateSetListener
 {
@@ -52,6 +53,8 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         rented.setOnCheckedChangeListener(this);
         geolocation.addTextChangedListener(this);
 
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
         MyRentApp app = (MyRentApp) getApplication();
         portfolio = app.portfolio;
         Long resId = (Long) getIntent().getExtras().getSerializable("RESIDENCE_ID");
@@ -76,10 +79,13 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-
-        if(id == R.id.action_settings){
-            return true;
+//        int id = item.getItemId();
+//        if(id == R.id.action_settings){
+//            return true;
+//        }
+        switch (item.getItemId()){
+            case android.R.id.home: navigateUp(this);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
