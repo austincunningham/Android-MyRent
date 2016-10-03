@@ -29,6 +29,7 @@ import android.view.View.OnClickListener;
 import static org.wit.android.helpers.ContactHelper.getContact;
 import static org.wit.android.helpers.IntentHelper.selectContact;
 import android.content.Intent;
+import static org.wit.android.helpers.ContactHelper.sendEmail;
 
 import static org.wit.android.helpers.IntentHelper.navigateUp;
 
@@ -42,6 +43,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
     private Portfolio portfolio;
     private static final int REQUEST_CONTACT = 1;
     private Button   tenantButton;
+    private Button   reportButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         dateButton = (Button) findViewById(R.id.registration_date);
         rented = (CheckBox) findViewById(R.id.isrented);
         tenantButton = (Button)   findViewById(R.id.tenant);
+        reportButton = (Button)   findViewById(R.id.residence_reportButton);
 
         residence = new Residence();
         //dateButton.setEnabled(false);
@@ -79,6 +82,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         rented.setOnCheckedChangeListener(this);
         dateButton.setText(residence.getDateString());
         tenantButton.setOnClickListener(this);
+        reportButton.setOnClickListener(this);
 
     }
 
@@ -132,6 +136,9 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
                 dpd.show();
                 break;
             case R.id.tenant : selectContact(this, REQUEST_CONTACT);
+                break;
+            case R.id.residence_reportButton :
+                sendEmail(this, "", getString(R.string.residence_report_subject), residence.getResidenceReport(this));
                 break;
         }
     }
