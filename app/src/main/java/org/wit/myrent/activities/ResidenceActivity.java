@@ -26,6 +26,9 @@ import java.util.GregorianCalendar;
 import android.app.DatePickerDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
+import static org.wit.android.helpers.ContactHelper.getContact;
+import static org.wit.android.helpers.IntentHelper.selectContact;
+import android.content.Intent;
 
 import static org.wit.android.helpers.IntentHelper.navigateUp;
 
@@ -37,6 +40,8 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
     private CheckBox rented;
     private Button dateButton;
     private Portfolio portfolio;
+    private static final int REQUEST_CONTACT = 1;
+    private Button   tenantButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         geolocation = (EditText) findViewById(R.id.geolocation);
         dateButton = (Button) findViewById(R.id.registration_date);
         rented = (CheckBox) findViewById(R.id.isrented);
+        tenantButton = (Button)   findViewById(R.id.tenant);
 
         residence = new Residence();
         //dateButton.setEnabled(false);
@@ -55,6 +61,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         geolocation.addTextChangedListener(this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         MyRentApp app = (MyRentApp) getApplication();
         portfolio = app.portfolio;
@@ -71,6 +78,8 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         geolocation.setText(residence.geolocation);
         rented.setOnCheckedChangeListener(this);
         dateButton.setText(residence.getDateString());
+        tenantButton.setOnClickListener(this);
+
     }
 
     @Override
@@ -121,6 +130,24 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
             case R.id.registration_date      : Calendar c = Calendar.getInstance();
                 DatePickerDialog dpd = new DatePickerDialog (this, this, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 dpd.show();
+                break;
+            case R.id.tenant : selectContact(this, REQUEST_CONTACT);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (requestCode)
+        {
+            case REQUEST_CONTACT:
+                String name = "Empty contact list";
+                if(data != null) {
+                    name = getContact(this, data);
+                }
+                residence.tenant = name;
+                tenantButton.setText(name);
                 break;
         }
     }
