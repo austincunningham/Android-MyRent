@@ -109,7 +109,7 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        switch (item.getItemId())activity_residence
+        switch (item.getItemId())
         {
             case android.R.id.home: navigateUp(getActivity());
                 return true;
@@ -154,7 +154,7 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
     {}
 
     @Override
-    public void afterTextChanged(Editable c)activity_residence
+    public void afterTextChanged(Editable c)
     {
         Log.i(this.getClass().getSimpleName(), "geolocation " + c.toString());
         residence.geolocation = c.toString();
