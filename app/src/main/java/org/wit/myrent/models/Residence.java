@@ -19,6 +19,7 @@ public class Residence
     private static final String JSON_TENANT         = "tenant"        ;
     public String tenant;
 
+
     //a latitude longitude pair
     //example "52.4566,-6.5444"
     public String geolocation;
@@ -26,10 +27,19 @@ public class Residence
 
     public Residence()
     {
+        id = unsignedLong();
         id = new Random().nextLong();
         date = new Date().getTime();
         geolocation = "52.253456,-7.187162";
         tenant = ":none presently";
+    }
+
+    private Long unsignedLong(){
+        long rndVal = 0;
+        do {
+            rndVal = new Random().nextLong();
+        }while (rndVal <= 0);
+        return rndVal;
     }
 
     public Residence(JSONObject json) throws JSONException
