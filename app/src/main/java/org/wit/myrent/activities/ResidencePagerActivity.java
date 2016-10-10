@@ -14,6 +14,12 @@ package org.wit.myrent.activities;
  import org.wit.myrent.models.Portfolio;
  import org.wit.myrent.models.Residence;
 
+ import android.support.v4.app.Fragment;
+ import android.support.v4.app.FragmentManager;
+ import android.support.v4.app.FragmentStatePagerAdapter;
+
+
+
  import java.util.ArrayList;
 
 public class ResidencePagerActivity extends AppCompatActivity
@@ -45,4 +51,34 @@ public class ResidencePagerActivity extends AppCompatActivity
         portfolio = app.portfolio;
         residences = portfolio.residences;
     }
+
+    class PagerAdapter extends FragmentStatePagerAdapter
+    {
+        private ArrayList<Residence>  residences;
+
+        public PagerAdapter(FragmentManager fm, ArrayList<Residence> residences)
+        {
+            super(fm);
+            this.residences = residences;
+        }
+
+        @Override
+        public int getCount()
+        {
+            return residences.size();
+        }
+
+        @Override
+        public Fragment getItem(int pos)
+        {
+            Residence residence = residences.get(pos);
+            Bundle args = new Bundle();
+            args.putSerializable(ResidenceFragment.EXTRA_RESIDENCE_ID, residence.id);
+            ResidenceFragment fragment = new ResidenceFragment();
+            fragment.setArguments(args);
+            return fragment;
+        }
+    }
+
+
 }
