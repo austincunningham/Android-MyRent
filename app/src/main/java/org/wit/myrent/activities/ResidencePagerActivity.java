@@ -42,7 +42,21 @@ public class ResidencePagerActivity extends AppCompatActivity
         setResidenceList();
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), residences);
         viewPager.setAdapter(pagerAdapter);
+        setCurrentItem();
 
+    }
+
+    /*
+ * Ensure selected residence is shown in details view
+ */
+    private void setCurrentItem() {
+        Long resId = (Long) getIntent().getSerializableExtra(ResidenceFragment.EXTRA_RESIDENCE_ID);
+        for (int i = 0; i < residences.size(); i++) {
+            if (residences.get(i).id.equals(resId)) {
+                viewPager.setCurrentItem(i);
+                break;
+            }
+        }
     }
 
     private void setResidenceList()
