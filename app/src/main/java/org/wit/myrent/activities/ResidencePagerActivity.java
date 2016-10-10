@@ -3,31 +3,28 @@ package org.wit.myrent.activities;
 /**
  * Created by ictskills on 10/10/16.
  */
- import android.os.Bundle;
- import android.support.v4.view.PagerAdapter;
- import android.support.v4.view.ViewPager;
- import android.support.v7.app.AppCompatActivity;
- import android.support.v4.view.ViewPager;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import org.wit.myrent.R;
+import org.wit.myrent.app.MyRentApp;
+import org.wit.myrent.models.Portfolio;
+import org.wit.myrent.models.Residence;
+import java.util.ArrayList;
+import static org.wit.android.helpers.LogHelpers.info;
 
- import org.wit.myrent.R;
- import org.wit.myrent.app.MyRentApp;
- import org.wit.myrent.models.Portfolio;
- import org.wit.myrent.models.Residence;
-
- import android.support.v4.app.Fragment;
- import android.support.v4.app.FragmentManager;
- import android.support.v4.app.FragmentStatePagerAdapter;
-
-
-
- import java.util.ArrayList;
-
-public class ResidencePagerActivity extends AppCompatActivity
+public class ResidencePagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener
 {
     private ViewPager viewPager;
     private ArrayList<Residence> residences;
     private Portfolio portfolio;
     private PagerAdapter pagerAdapter;
+
+    ActionBar actionBar;
 
 
     @Override
@@ -42,7 +39,10 @@ public class ResidencePagerActivity extends AppCompatActivity
         setResidenceList();
         pagerAdapter = new PagerAdapter(getSupportFragmentManager(), residences);
         viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(this);
         setCurrentItem();
+        actionBar = getSupportActionBar();
+
 
     }
 
@@ -64,6 +64,26 @@ public class ResidencePagerActivity extends AppCompatActivity
         MyRentApp app = (MyRentApp) getApplication();
         portfolio = app.portfolio;
         residences = portfolio.residences;
+    }
+
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        info(this, "onPageScrolled: position " + position + " arg1 " + positionOffset + " positionOffsetPixels " + positionOffsetPixels);
+        Residence residence = residences.get(position);
+        if (residence.geolocation != null) {
+            setTitle(residence.geolocation);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     class PagerAdapter extends FragmentStatePagerAdapter
