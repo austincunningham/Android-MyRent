@@ -58,6 +58,11 @@ public class Portfolio
         }
     }
 
+    public void deleteResidence(Residence residence)
+    {
+        residences.remove(residence);
+        saveResidences();
+    }
 
     /*private void generateTestData() {
         for (int i = 0; i < 100; i += 1) {
