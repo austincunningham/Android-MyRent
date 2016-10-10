@@ -60,7 +60,7 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        Long resId = (Long) getActivity().getIntent().getSerializableExtra(EXTRA_RESIDENCE_ID);
+        Long resId = (Long)getArguments().getSerializable(EXTRA_RESIDENCE_ID);
 
         app = MyRentApp.getApp();
         portfolio = app.portfolio;
@@ -123,7 +123,7 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
     public void onPause()
     {
         super.onPause();
-        portfolio.saveResidences();
+        portfolio.saveResidences();Long resId = (Long) getActivity().getIntent().getSerializableExtra(EXTRA_RESIDENCE_ID);
     }
 
     @Override
