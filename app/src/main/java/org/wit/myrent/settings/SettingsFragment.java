@@ -8,7 +8,7 @@ import org.wit.myrent.R;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-public class SettingsFragment extends PreferenceFragment
+public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener
 {
     private SharedPreferences prefs;
     @Override
@@ -18,10 +18,22 @@ public class SettingsFragment extends PreferenceFragment
     }
 
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
-        prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        prefs.registerOnSharedPreferenceChangeListener(this);
+    }
+    
+    @Override
+    public void onStop()
+    {
+        super.onStop();
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
     }
 }
