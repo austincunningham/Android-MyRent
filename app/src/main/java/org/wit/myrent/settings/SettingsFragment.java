@@ -7,6 +7,8 @@ import org.wit.myrent.R;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
+import static org.wit.android.helpers.IntentHelper.navigateUp;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener
 {
@@ -15,6 +17,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -24,7 +27,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         prefs.registerOnSharedPreferenceChangeListener(this);
     }
-    
+
     @Override
     public void onStop()
     {
@@ -35,5 +38,17 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                navigateUp(getActivity());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
