@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import org.wit.myrent.R;
 import org.wit.myrent.app.MyRentApp;
@@ -24,7 +23,7 @@ public class ResidencePagerActivity extends AppCompatActivity implements ViewPag
     private Portfolio portfolio;
     private PagerAdapter pagerAdapter;
 
-    ActionBar actionBar;
+
 
 
     @Override
@@ -41,7 +40,7 @@ public class ResidencePagerActivity extends AppCompatActivity implements ViewPag
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(this);
         setCurrentItem();
-        actionBar = getSupportActionBar();
+
 
 
     }
