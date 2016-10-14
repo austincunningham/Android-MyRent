@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import static org.wit.android.helpers.IntentHelper.navigateUp;
+import static org.wit.android.helpers.LogHelpers.info;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener
 {
@@ -36,7 +37,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        info(getActivity(),"Setting change - key : value = "+ key +":" +sharedPreferences.getString(key,""));
 
     }
     @Override
