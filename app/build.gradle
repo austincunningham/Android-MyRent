@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "org.wit.myrent"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -15,15 +15,24 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [google_map_key: "AIzaSyAXMKWQZUcE9HYJEjb5Y3QkeRzHw74zX8U"]
+        }
+        debug {
+            manifestPlaceholders = [google_map_key: "AIzaSyAXMKWQZUcE9HYJEjb5Y3QkeRzHw74zX8U"]
+            debuggable true
         }
     }
-}
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.google.android.gms:play-services:9.4.0'
-    compile "com.android.support:support-v13:23.0.+"
+
+    dependencies {
+        compile fileTree(dir: 'libs', include: ['*.jar'])
+        testCompile 'junit:junit:4.12'
+        compile 'com.android.support:appcompat-v7:23.4.0'
+        compile 'com.android.support:design:23.4.0'
+        compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:4.1.1@aar'){
+            transitive=true
+        }
+        //compile 'com.google.android.gms:play-services:9.4.0'
+        //compile "com.android.support:support-v13:23.0.+"
+    }
 }
