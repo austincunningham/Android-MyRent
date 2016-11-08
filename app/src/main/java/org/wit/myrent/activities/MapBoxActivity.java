@@ -22,7 +22,7 @@ import org.wit.myrent.models.Residence;
 
 import org.wit.myrent.R;
 
-public class MapBoxActivity extends Activity {
+public class MapBoxActivity extends Activity implements OnMapReadyCallback{
 
     private MapView mapView;
 
@@ -40,14 +40,7 @@ public class MapBoxActivity extends Activity {
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(MapboxMap mapboxMap) {
-
-                // Customize map with markers, polylines, etc.
-
-            }
-        });
+        mapView.getMapAsync(this);
     }
 
     // Add the mapView lifecycle to the activity's lifecycle methods
@@ -79,5 +72,11 @@ public class MapBoxActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+    }
+
+    // OnMapReadyCallback interface method impl
+    @Override
+    public void onMapReady(MapboxMap mapboxMap) {
+        // TODO: map customization
     }
 }
