@@ -26,6 +26,7 @@ public class Residence
     public String geolocation;
     public boolean rented;
     public double zoom ;//zoom level of accompanying map
+    public String photo;
 
     public Residence()
     {
