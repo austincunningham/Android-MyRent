@@ -69,7 +69,7 @@ public class MapBoxActivity extends AppCompatActivity implements
         switch (item.getItemId())
         {
             case android.R.id.home:
-                navigateUp(this);
+                navigateUp(this, ResidenceFragment.EXTRA_RESIDENCE_ID, resId);
                 return true;
 
             default: return super.onOptionsItemSelected(item);
