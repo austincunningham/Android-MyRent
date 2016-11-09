@@ -126,10 +126,9 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
     }
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
-        portfolio.saveResidences();Long resId = (Long) getActivity().getIntent().getSerializableExtra(EXTRA_RESIDENCE_ID);
+        portfolio.updateResidence(residence);
     }
 
     @Override
