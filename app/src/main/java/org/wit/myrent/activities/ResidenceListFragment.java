@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 public class ResidenceListFragment extends ListFragment implements OnItemClickListener,AbsListView.MultiChoiceModeListener
 {
@@ -95,6 +96,9 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
             case R.id.action_settings:
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
                 return true;
+            case R.id.action_refresh:
+                retrieveResidences();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -156,6 +160,10 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
     @Override
     public void onItemCheckedStateChanged(ActionMode actionMode, int position, long id, boolean checked)
     {
+    }
+
+    public void retrieveResidences() {
+        Toast.makeText(getActivity(), "Retrieving residence list", Toast.LENGTH_SHORT).show();
     }
 
   /* ************ MultiChoiceModeListener methods (end) *********** */
