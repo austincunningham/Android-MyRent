@@ -30,7 +30,13 @@ import android.support.v4.app.ListFragment;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
-public class ResidenceListFragment extends ListFragment implements OnItemClickListener,AbsListView.MultiChoiceModeListener
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+
+public class ResidenceListFragment extends ListFragment implements OnItemClickListener,
+        AbsListView.MultiChoiceModeListener, Callback<Residence>
 {
     private ArrayList<Residence> residences;
     private Portfolio portfolio;
@@ -88,6 +94,7 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
             case R.id.menu_item_new_residence:
                 Residence residence = new Residence();
                 portfolio.addResidence(residence);
+                createResidence(residence);
 
                 Intent i = new Intent(getActivity(), ResidencePagerActivity.class);
                 i.putExtra(ResidenceFragment.EXTRA_RESIDENCE_ID, residence.id);
@@ -165,8 +172,32 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
     public void retrieveResidences() {
         Toast.makeText(getActivity(), "Retrieving residence list", Toast.LENGTH_SHORT).show();
     }
+    /* ************ MultiChoiceModeListener methods (end) *********** */
+    @Override
+    public void onResponse(Response<Residence> response, Retrofit retrofit) {
+        Residence returnedResidence = response.body();
+        if (returnedResidence != null) {
+            Toast.makeText(getActivity(), "Residence created successfully", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getActivity(), "Residence null object returned due to incorrectly configured client", Toast.LENGTH_SHORT).show();
 
-  /* ************ MultiChoiceModeListener methods (end) *********** */
+        }
+
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+        Toast.makeText(getActivity(), "Failed to create residence due to unknown network issue", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void createResidence(Residence res) {
+        Call<Residence> call = app.residenceService.createResidence(res);
+        call.enqueue(this);
+    }
+
+
 
     class ResidenceAdapter extends ArrayAdapter<Residence>
     {
