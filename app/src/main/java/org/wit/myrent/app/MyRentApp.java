@@ -1,6 +1,7 @@
 package org.wit.myrent.app;
 
 import android.app.Application;
+import android.content.Intent;
 import android.util.Log;
 import org.wit.myrent.models.Portfolio;
 
@@ -17,8 +18,8 @@ public class MyRentApp extends Application
 {
     static final String TAG = "MyRentApp";
     public Portfolio portfolio;
-    public String service_url = "http://10.0.2.2:9000"; //Android Emulator
-    //public String service_url = "https://myrent-service-2016.herokuapp.com/";
+    //public String service_url = "http://10.0.2.2:9000"; //Android Emulator
+    public String service_url = "https://myrent-service-2016.herokuapp.com/";
     public ResidenceServiceProxy residenceService;
 
     protected static MyRentApp app;
@@ -37,6 +38,7 @@ public class MyRentApp extends Application
                 .build();
 
         residenceService = retrofit.create(ResidenceServiceProxy.class);
+        sendBroadcast(new Intent("org.wit.myrent.receivers.SEND_BROADCAST"));
     }
 
     public static MyRentApp getApp(){

@@ -1,6 +1,7 @@
 package org.wit.myrent.settings;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import org.wit.myrent.R;
@@ -39,7 +40,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         info(getActivity(),"Setting change - key : value = "+ key +":" +sharedPreferences.getString(key,""));
-
+        // If the refresh frequency is changed send a broadcast so that alarm appropriately reset.
+        String refreshIntervalKey = getActivity().getResources().getString(R.string.refresh_interval_preference_key);
+        if(key.equals(refreshIntervalKey)) {
+            getActivity().sendBroadcast(new Intent("org.wit.myrent.receivers.SEND_BROADCAST"));
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
