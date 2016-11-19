@@ -36,6 +36,10 @@ import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
+import android.content.BroadcastReceiver;
+
 public class ResidenceListFragment extends ListFragment implements OnItemClickListener,
         AbsListView.MultiChoiceModeListener, Callback<Residence>
 {
@@ -43,6 +47,8 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
     private Portfolio portfolio;
     private ResidenceAdapter adapter;
     private ListView listView;
+    public static final String BROADCAST_ACTION = "org.wit.myrent.activities.ResidenceListFragment";
+    private IntentFilter intentFilter;
 
     MyRentApp app;
     @Override
@@ -57,7 +63,7 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
 
         adapter = new ResidenceAdapter(getActivity(), residences);
         setListAdapter(adapter);
-
+        registerBroadcastReceiver();
     }
 
     @Override
@@ -243,15 +249,37 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
         call.enqueue(this);
     }
 
+    private void registerBroadcastReceiver()
+    {
+        intentFilter = new IntentFilter(BROADCAST_ACTION);
+        ResponseReceiver responseReceiver = new ResponseReceiver();
+        // Registers the ResponseReceiver and its intent filters
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(responseReceiver, intentFilter);
+    }
 
+    //Broadcast receiver for receiving status updates from the IntentService
+    private class ResponseReceiver extends BroadcastReceiver
+    {
+        //private void ResponseReceiver() {}
+        // Called when the BroadcastReceiver gets an Intent it's registered to receive
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            //refreshDonationList();
+            adapter.residences = app.portfolio.residences;
+            adapter.notifyDataSetChanged();
+        }
+    }
 
     class ResidenceAdapter extends ArrayAdapter<Residence>
     {
         private Context context;
+        List<Residence> residences;
 
         public ResidenceAdapter(Context context, ArrayList<Residence> residences) {
             super(context, 0, residences);
             this.context = context;
+            this.residences = residences;
         }
 
         @SuppressLint("InflateParams")

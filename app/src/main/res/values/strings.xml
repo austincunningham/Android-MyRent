@@ -33,4 +33,6 @@
     <string name="set_refresh_interval_summary">Frequency of cloud updates (minutes)</string>
     <string name="refresh">Refresh Residence List</string>
 
+    <string name="refresh_interval_preference_key">refresh_interval</string>
+
 </resources>
