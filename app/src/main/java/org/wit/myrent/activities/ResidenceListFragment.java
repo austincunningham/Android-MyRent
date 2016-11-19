@@ -1,6 +1,7 @@
 package org.wit.myrent.activities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.wit.android.helpers.IntentHelper;
 import org.wit.myrent.R;
@@ -190,10 +191,34 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
     {
     }
 
+    /* ************ MultiChoiceModeListener methods (end) *********** */
+
+    // Retrofit manual refresh
+
     public void retrieveResidences() {
         Toast.makeText(getActivity(), "Retrieving residence list", Toast.LENGTH_SHORT).show();
+        RetrieveResidences retrieveResidences = new RetrieveResidences();
+        Call<List<Residence>> call = app.residenceService.getResidences();
+        call.enqueue(retrieveResidences);
     }
-    /* ************ MultiChoiceModeListener methods (end) *********** */
+
+    class RetrieveResidences implements Callback<List<Residence>>
+    {
+        @Override
+        public void onResponse(Response<List<Residence>> response, Retrofit retrofit) {
+            List<Residence> listRes = response.body();
+            Toast.makeText(getActivity(), "Retrieved " + listRes.size() + " residences", Toast.LENGTH_SHORT).show();
+            portfolio.refreshResidences(listRes);
+            ((ResidenceAdapter) getListAdapter()).notifyDataSetChanged();
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            Toast.makeText(getActivity(), "Failed to retrieve residence list", Toast.LENGTH_SHORT).show();
+        }
+    }
+    // retrofit refresh end
+
     @Override
     public void onResponse(Response<Residence> response, Retrofit retrofit) {
         Residence returnedResidence = response.body();

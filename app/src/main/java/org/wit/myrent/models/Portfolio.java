@@ -112,4 +112,9 @@ public class Portfolio
             }
         }
     }
+
+    /**
+     * Clear local and sqlite residences and refresh with incoming list.
+     * @param residences List residence objects
+     */
 }
