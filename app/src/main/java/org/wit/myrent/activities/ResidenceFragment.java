@@ -35,10 +35,19 @@ import static org.wit.android.helpers.IntentHelper.startActivityWithData;
 
 import android.support.design.widget.FloatingActionButton;
 
+import android.widget.Toast;
+
+import retrofit.Call;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
+
 public class ResidenceFragment extends Fragment implements TextWatcher,
         OnCheckedChangeListener,
         OnClickListener,
-        DatePickerDialog.OnDateSetListener
+        DatePickerDialog.OnDateSetListener,
+        View.OnLongClickListener,
+        Callback<Residence>
 {
     public static   final String  EXTRA_RESIDENCE_ID = "myrent.RESIDENCE_ID";
 
@@ -127,6 +136,7 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
 
     @Override
     public void onPause() {
+        updateResidence(residence);
         super.onPause();
         portfolio.updateResidence(residence);
     }
@@ -202,5 +212,33 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
         Date date = new GregorianCalendar(year, monthOfYear, dayOfMonth).getTime();
         residence.date = date.getTime();
         dateButton.setText(residence.getDateString());
+    }
+
+    @Override
+    public boolean onLongClick(View v) {
+        return false;
+    }
+
+    @Override
+    public void onResponse(Response<Residence> response, Retrofit retrofit) {
+        Residence returnedResidence = response.body();
+        if (returnedResidence != null) {
+            Toast.makeText(getActivity(), "Residence updated successfully", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getActivity(), "Update failed. Residence null returned due to incorrectly configured client", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+        Toast.makeText(getActivity(), "Failed to update residence due to unknown network issue", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void updateResidence(Residence res) {
+        Call<Residence> call = app.residenceService.updateResidence(res);
+        call.enqueue(this);
     }
 }
