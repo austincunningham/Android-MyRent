@@ -49,6 +49,16 @@
         </activity>
 
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
+
+        <receiver android:name=".receivers.BootReceiver"
+            android:exported="false">
+            <intent-filter >
+                <action android:name="org.wit.myrent.receivers.SEND_BROADCAST"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".services.RefreshService"
+            android:exported="false"/>
     </application>
 
 </manifest>
