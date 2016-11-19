@@ -145,20 +145,41 @@ public class ResidenceListFragment extends ListFragment implements OnItemClickLi
         }
 
     }
-
+    // retrofit delete start
     private void deleteResidence(ActionMode actionMode)
     {
         for (int i = adapter.getCount() - 1; i >= 0; i--)
         {
             if (listView.isItemChecked(i))
             {
-                portfolio.deleteResidence(adapter.getItem(i));
+                Residence residence = adapter.getItem(i);
+                portfolio.deleteResidence(residence);
+                deleteResidence(residence.id);//
             }
         }
         actionMode.finish();
         adapter.notifyDataSetChanged();
     }
 
+    public void deleteResidence(long id) {//this was a String but it doesn't work as id is a long
+        DeleteRemoteResidence delResidence = new DeleteRemoteResidence();
+        Call<String> call = app.residenceService.deleteResidence(id);
+        call.enqueue(delResidence);
+    }
+    class DeleteRemoteResidence implements Callback<String> {
+
+        @Override
+        public void onResponse(Response<String> response, Retrofit retrofit) {
+            Toast.makeText(getActivity(), "Residence deleted", Toast.LENGTH_SHORT).show();
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            Toast.makeText(getActivity(), "Failed to delete Residence due to unknown network issue", Toast.LENGTH_SHORT).show();
+        }
+    }
+    // retrofit delete end
     @Override
     public void onDestroyActionMode(ActionMode actionMode)
     {

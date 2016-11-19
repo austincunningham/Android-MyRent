@@ -31,7 +31,7 @@ public class Residence
     public Residence()
     {
         id = unsignedLong();
-        id = new Random().nextLong();
+        //id = new Random().nextLong();
         date = new Date().getTime();
         geolocation = "52.253456,-7.187162";
         tenant = ":none presently";
