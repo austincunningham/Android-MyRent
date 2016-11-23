@@ -1,49 +1,78 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical" >
+
+    <!-- LOCATION -->
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/location"
-        android:id="@+id/textView"
-        style="?android:listSeparatorTextViewStyle"/>
-
-    <EditText
-        android:id="@+id/geolocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/geolocation_hint"
-        android:singleLine="true"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/status"
-        android:id="@+id/textView2"
         style="?android:listSeparatorTextViewStyle"
-        />
-
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/registration_date"
-        android:id="@+id/registration_date"
+        android:text="@string/location" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <!-- Geolocation (GPS Coords) -->
+
+        <EditText
+            android:id="@+id/geolocation"
+            android:layout_width="194dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/geolocation_hint"
+            android:layout_weight="0.75">
+
+            <requestFocus />
+        </EditText>
+
+        <!-- Camera button + thumbnail-->
+        <ImageButton
+            android:id="@+id/camera_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerInside"
+            android:layout_marginTop="16dp"
+            android:src="@android:drawable/ic_menu_camera"
+            android:layout_gravity="top"/>
+        <ImageView
+            android:id="@+id/myrent_imageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerInside"
+            android:background="@android:color/darker_gray"
+            android:cropToPadding="true"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="16dp"/>
+
+    </LinearLayout>
+
+    <!-- STATUS -->
+
+    <TextView
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/status" />
+
+    <Button android:id="@+id/registration_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         />
-
+    <!-- Checkbox -->
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/isrented"
         android:id="@+id/isrented"
-        android:checked="false"
-        />
+        android:checked="false"/>
 
     <Button
         android:id="@+id/tenant"
@@ -61,6 +90,7 @@
         android:text="@string/residence_report"
         />
 
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -68,5 +98,4 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_blue_marker"/>
-
 </LinearLayout>

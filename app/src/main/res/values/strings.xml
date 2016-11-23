@@ -34,5 +34,7 @@
     <string name="refresh">Refresh Residence List</string>
 
     <string name="refresh_interval_preference_key">refresh_interval</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="save_photo">Save Photo</string>
 
 </resources>
