@@ -41,6 +41,8 @@ import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
+import static org.wit.android.helpers.CameraHelper.showPhoto;
+import android.widget.ImageView;
 
 public class ResidenceFragment extends Fragment implements TextWatcher,
         OnCheckedChangeListener,
@@ -52,6 +54,7 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
     public static   final String  EXTRA_RESIDENCE_ID = "myrent.RESIDENCE_ID";
 
     private static  final int     REQUEST_CONTACT = 1;
+    private static final int REQUEST_PHOTO = 0;
 
     private EditText geolocation;
     private CheckBox rented;
@@ -63,6 +66,8 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
     private Portfolio   portfolio;
 
     private String emailAddress = "";
+    private ImageView cameraButton;
+    private ImageView photoView;
 
     MyRentApp app;
 
@@ -104,13 +109,15 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
         rented      = (CheckBox) v.findViewById(R.id.isrented);
         tenantButton = (Button)  v.findViewById(R.id.tenant);
         reportButton = (Button)  v.findViewById(R.id.residence_reportButton);
-
+        cameraButton = (ImageView) v.findViewById(R.id.camera_button);
+        photoView = (ImageView) v.findViewById(R.id.myrent_imageView);
 
         geolocation .addTextChangedListener(this);
         dateButton  .setOnClickListener(this);
         rented      .setOnCheckedChangeListener(this);
         tenantButton.setOnClickListener(this);
         reportButton.setOnClickListener(this);
+        cameraButton.setOnClickListener(this);
 
     }
 
@@ -156,6 +163,14 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
                 emailAddress = ContactHelper.getEmail(getActivity(), data);
                 tenantButton.setText(name + " : " + emailAddress);
                 residence.tenant = name;
+                break;
+            case REQUEST_PHOTO:
+                String filename = data.getStringExtra(ResidenceCameraActivity.EXTRA_PHOTO_FILENAME);
+                if (filename != null)
+                {
+                    residence.photo = filename;
+                    showPhoto(getActivity(), residence, photoView );
+                }
                 break;
         }
     }
@@ -203,6 +218,10 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
             case R.id.fab:
                 startActivityWithData(getActivity(), MapBoxActivity.class, EXTRA_RESIDENCE_ID, residence.id);
                 break;
+            case R.id.camera_button:
+                Intent ic = new Intent(getActivity(), ResidenceCameraActivity.class);
+                startActivityForResult(ic, REQUEST_PHOTO);
+                break;
         }
     }
 
@@ -240,5 +259,15 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
     public void updateResidence(Residence res) {
         Call<Residence> call = app.residenceService.updateResidence(res);
         call.enqueue(this);
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        //display thumbnail photo
+        showPhoto(getActivity(), residence, photoView);
+
+
     }
 }
