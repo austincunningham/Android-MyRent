@@ -50,6 +50,7 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
         DatePickerDialog.OnDateSetListener,
         View.OnLongClickListener,
         Callback<Residence>
+
 {
     public static   final String  EXTRA_RESIDENCE_ID = "myrent.RESIDENCE_ID";
 
@@ -118,6 +119,7 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
         tenantButton.setOnClickListener(this);
         reportButton.setOnClickListener(this);
         cameraButton.setOnClickListener(this);
+        photoView.setOnLongClickListener(this);
 
     }
 
@@ -235,7 +237,10 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
 
     @Override
     public boolean onLongClick(View v) {
-        return false;
+        Intent i = new Intent(getActivity(), ResidenceGalleryActivity.class);
+        i.putExtra(EXTRA_RESIDENCE_ID, residence.id);
+        startActivity(i);
+        return true;
     }
 
     @Override
@@ -270,4 +275,5 @@ public class ResidenceFragment extends Fragment implements TextWatcher,
 
 
     }
+
 }
