@@ -36,6 +36,7 @@ public class Residence
         geolocation = "52.253456,-7.187162";
         tenant = ":none presently";
         zoom = 16.0f;
+        photo = "photo";
     }
 
     private Long unsignedLong(){
